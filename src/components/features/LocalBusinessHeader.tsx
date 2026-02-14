@@ -20,7 +20,7 @@ export function LocalBusinessHeader({
     <header className="flex items-center justify-between p-6 lg:p-8 border-b border-gray-200">
       {/* Title */}
       <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
-        Local Bussiness
+        Local Business
       </h1>
 
       {/* Right Side - Search and User Profile */}
@@ -29,7 +29,7 @@ export function LocalBusinessHeader({
         <div className="hidden md:block">
           <Input
             placeholder="Search for anything..."
-            className="w-64 h-12 px-4 bg-red-600 text-white placeholder:text-white/80 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-red-500 cursor-text"
+            className="w-64 h-12 px-4 bg-red-600 text-white placeholder:text-white/80 rounded-full border-0 focus:outline-none focus:ring-2 focus:ring-red-500 cursor-text"
           />
         </div>
 

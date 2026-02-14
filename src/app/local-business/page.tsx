@@ -6,6 +6,7 @@ import { MainContent } from "@/components/layout/MainContent";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { MobileSidebar } from "@/components/layout/MobileSidebar";
 import { LocalBusinessHeader } from "@/components/features/LocalBusinessHeader";
+import { AddBusinessBanner } from "@/components/features/AddBusinessBanner";
 import { BusinessTabs } from "@/components/features/BusinessTabs";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
@@ -36,7 +37,8 @@ export default function LocalBusinessPage() {
           <LocalBusinessHeader onMenuToggle={handleMenuToggle} />
 
           {/* Main Content */}
-          <div className="flex-1 overflow-y-auto p-6 lg:p-8">
+          <div className="flex-1 overflow-y-auto p-6 lg:p-8 space-y-6">
+            <AddBusinessBanner />
             <BusinessTabs />
           </div>
         </div>

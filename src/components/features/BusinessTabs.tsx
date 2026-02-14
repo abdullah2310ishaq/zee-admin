@@ -12,16 +12,16 @@ export function BusinessTabs() {
 
   return (
     <div className="space-y-6">
-      {/* Tabs */}
+      {/* Tabs - pill / circular edges */}
       <div className="border-b-2 border-gray-200">
-        <nav className="flex gap-4">
+        <nav className="flex gap-2">
           <button
             onClick={() => setActiveTab("add")}
             className={cn(
-              "px-4 py-3 text-sm font-medium border-b-2 transition-colors",
+              "px-5 py-3 text-sm font-medium rounded-full transition-colors cursor-pointer",
               activeTab === "add"
-                ? "border-red-600 text-red-600"
-                : "border-transparent text-gray-500 hover:text-gray-700"
+                ? "bg-red-600 text-white"
+                : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
             )}
           >
             Add Business
@@ -29,10 +29,10 @@ export function BusinessTabs() {
           <button
             onClick={() => setActiveTab("list")}
             className={cn(
-              "px-4 py-3 text-sm font-medium border-b-2 transition-colors",
+              "px-5 py-3 text-sm font-medium rounded-full transition-colors cursor-pointer",
               activeTab === "list"
-                ? "border-red-600 text-red-600"
-                : "border-transparent text-gray-500 hover:text-gray-700"
+                ? "bg-red-600 text-white"
+                : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
             )}
           >
             View All Businesses

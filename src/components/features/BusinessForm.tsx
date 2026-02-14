@@ -494,7 +494,7 @@ export function BusinessForm({ business, onSuccess }: BusinessFormProps = {}) {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-3 text-base rounded-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          className="bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-3 text-base rounded-full cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? "Saving..." : isEditing ? "Update Business" : "Add New Business"}
         </Button>
