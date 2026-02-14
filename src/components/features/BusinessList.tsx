@@ -1,200 +1,127 @@
 "use client";
 
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getBusinesses, deleteBusiness, type Business } from "@/actions/business";
-import { useState } from "react";
+import Link from "next/link";
+import { type Business } from "@/actions/business";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/Button";
-import { BusinessForm } from "./BusinessForm";
+import { COLORS } from "@/constants/colors";
+import { DUMMY_BUSINESSES } from "@/data/dummyBusinesses";
 
-export function BusinessList() {
-  const queryClient = useQueryClient();
-  const [editingBusiness, setEditingBusiness] = useState<Business | null>(null);
-  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+const APP_GRADIENT = `linear-gradient(135deg, ${COLORS.GRADIENT_START} 0%, ${COLORS.GRADIENT_END} 100%)`;
 
-  // Fetch businesses
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["businesses"],
-    queryFn: async () => {
-      const result = await getBusinesses();
-      if (!result.success) {
-        throw new Error(result.message || "Failed to fetch businesses");
-      }
-      return result.businesses || [];
-    },
-  });
-
-  // Delete mutation
-  const deleteMutation = useMutation({
-    mutationFn: deleteBusiness,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["businesses"] });
-      setDeleteConfirmId(null);
-    },
-  });
-
-  const handleDelete = (id: string) => {
-    deleteMutation.mutate(id);
-  };
-
-  const handleEdit = (business: Business) => {
-    setEditingBusiness(business);
-  };
-
-  const handleCancelEdit = () => {
-    setEditingBusiness(null);
-  };
-
-  const handleSaveSuccess = () => {
-    setEditingBusiness(null);
-    queryClient.invalidateQueries({ queryKey: ["businesses"] });
-  };
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <div className="text-gray-500">Loading businesses...</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <div className="text-red-600">
-          Error loading businesses: {error.message}
-        </div>
-      </div>
-    );
-  }
-
-  if (editingBusiness) {
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-gray-900">Edit Business</h2>
-          <Button
-            onClick={handleCancelEdit}
-            className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg"
-          >
-            Cancel
-          </Button>
-        </div>
-        <BusinessForm
-          business={editingBusiness}
-          onSuccess={handleSaveSuccess}
-        />
-      </div>
-    );
-  }
-
-  if (!data || data.length === 0) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <div className="text-gray-500">No businesses found. Create your first business!</div>
-      </div>
-    );
-  }
+function BusinessCard({ business }: { business: Business }) {
+  const heroImage = business.images?.[0] || "";
 
   return (
-    <div className="space-y-4">
-      <div className="grid gap-4">
-        {data.map((business) => (
-          <div
-            key={business.id}
-            className="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-red-600 transition-colors"
-          >
-            <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
-              {/* Business Info */}
-              <div className="flex-1 space-y-3">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      {business.businessName}
-                    </h3>
-                    <p className="text-sm text-gray-500 mt-1">
-                      {business.businessType} • {business.services.charAt(0).toUpperCase() + business.services.slice(1)}
-                    </p>
-                  </div>
-                </div>
-
-                {business.businessDescription && (
-                  <p className="text-sm text-gray-700 line-clamp-2">
-                    {business.businessDescription}
-                  </p>
-                )}
-
-                <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-                  {business.serviceHours && (
-                    <div>
-                      <span className="font-medium">Hours:</span> {business.serviceHours}
-                    </div>
-                  )}
-                  {business.serviceAreas && (
-                    <div>
-                      <span className="font-medium">Areas:</span> {business.serviceAreas}
-                    </div>
-                  )}
-                </div>
-
-                {/* Images */}
-                {business.images && business.images.length > 0 && (
-                  <div className="flex gap-2 flex-wrap">
-                    {business.images.slice(0, 3).map((imageUrl, index) => (
-                      <img
-                        key={index}
-                        src={imageUrl}
-                        alt={`${business.businessName} ${index + 1}`}
-                        className="w-20 h-20 object-cover rounded-lg border-2 border-gray-200"
-                      />
-                    ))}
-                    {business.images.length > 3 && (
-                      <div className="w-20 h-20 bg-gray-100 rounded-lg border-2 border-gray-200 flex items-center justify-center text-xs text-gray-500">
-                        +{business.images.length - 3}
-                      </div>
-                    )}
-                  </div>
-                )}
+    <Link
+      href={`/local-business/${business.id}`}
+      className={cn(
+        "group block rounded-2xl overflow-hidden shadow-lg border border-gray-200",
+        "bg-white transition-shadow hover:shadow-xl hover:border-red-200"
+      )}
+    >
+      <div
+        className="h-1.5 w-full shrink-0"
+        style={{ background: APP_GRADIENT }}
+      />
+      <div className="flex flex-col md:flex-row">
+        <div className="md:w-80 lg:w-96 shrink-0">
+          <div className="relative h-52 md:h-full md:min-h-[240px] bg-gray-100">
+            {heroImage ? (
+              <img
+                src={heroImage}
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            ) : (
+              <div
+                className="absolute inset-0 flex items-center justify-center text-4xl text-gray-400"
+                style={{ background: APP_GRADIENT }}
+              >
+                🏢
               </div>
+            )}
+            <span
+              className="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold text-white shadow"
+              style={{ background: COLORS.GRADIENT_END }}
+            >
+              Sample
+            </span>
+          </div>
+        </div>
 
-              {/* Actions */}
-              <div className="flex gap-2 lg:flex-col">
-                <Button
-                  onClick={() => handleEdit(business)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm"
+        <div className="flex-1 p-6 flex flex-col">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h3 className="text-xl font-bold text-gray-900">
+                {business.businessName}
+              </h3>
+              <div className="flex flex-wrap items-center gap-2 mt-1">
+                <span
+                  className="inline-flex px-3 py-1 rounded-full text-xs font-medium text-white"
+                  style={{ background: COLORS.GRADIENT_START }}
                 >
-                  Edit
-                </Button>
-                {deleteConfirmId === business.id ? (
-                  <div className="flex gap-2 lg:flex-col">
-                    <Button
-                      onClick={() => handleDelete(business.id)}
-                      disabled={deleteMutation.isPending}
-                      className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm disabled:opacity-50"
-                    >
-                      {deleteMutation.isPending ? "Deleting..." : "Confirm"}
-                    </Button>
-                    <Button
-                      onClick={() => setDeleteConfirmId(null)}
-                      className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm"
-                    >
-                      Cancel
-                    </Button>
-                  </div>
-                ) : (
-                  <Button
-                    onClick={() => setDeleteConfirmId(business.id)}
-                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm"
-                  >
-                    Delete
-                  </Button>
-                )}
+                  {business.businessType}
+                </span>
+                <span className="text-sm text-gray-500 capitalize">
+                  {business.services}
+                </span>
               </div>
             </div>
+            <span className="text-gray-400 group-hover:text-red-600">
+              View details →
+            </span>
           </div>
+
+          {business.businessDescription && (
+            <p className="text-sm text-gray-600 mt-3 line-clamp-3 leading-relaxed">
+              {business.businessDescription}
+            </p>
+          )}
+
+          <div className="mt-4 space-y-2 text-sm text-gray-600">
+            {business.serviceHours && (
+              <div className="flex items-center gap-2">
+                <span className="text-gray-400 shrink-0">🕐</span>
+                <span>{business.serviceHours}</span>
+              </div>
+            )}
+            {business.serviceAreas && (
+              <div className="flex items-center gap-2">
+                <span className="text-gray-400 shrink-0">📍</span>
+                <span>{business.serviceAreas}</span>
+              </div>
+            )}
+          </div>
+
+          {business.images && business.images.length > 1 && (
+            <div className="flex gap-2 mt-4 flex-wrap">
+              {business.images.slice(1, 4).map((url, i) => (
+                <img
+                  key={i}
+                  src={url}
+                  alt=""
+                  className="w-16 h-16 object-cover rounded-lg border border-gray-200"
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+export function BusinessList() {
+  return (
+    <div className="space-y-6">
+      <p className="text-sm text-gray-500">
+        Dummy list for now. Click a card to open the detailed page.
+      </p>
+      <div className="grid gap-6">
+        {DUMMY_BUSINESSES.map((business) => (
+          <BusinessCard key={business.id} business={business} />
         ))}
       </div>
     </div>
   );
 }
-
