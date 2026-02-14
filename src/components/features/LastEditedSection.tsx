@@ -1,46 +1,49 @@
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-export function LastEditedSection() {
+interface LastEditedSectionProps {
+  className?: string;
+}
+
+export function LastEditedSection({ className }: LastEditedSectionProps) {
   return (
-    <section>
-      {/* Section Title */}
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">Last Edited</h2>
+    <section className={cn("bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden", className)}>
+      {/* Card header: title + action icon */}
+      <div className="p-5 pb-0 flex items-start justify-between gap-4">
+        <h2 className="text-xl font-bold text-gray-900">Last Edited</h2>
+        <Link
+          href="#"
+          className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors cursor-pointer shrink-0"
+          aria-label="View more"
+        >
+          <svg
+            className="w-4 h-4 text-gray-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M7 17L17 7M17 7H7M17 7V17"
+            />
+          </svg>
+        </Link>
+      </div>
 
-      {/* Content Card */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <div className="flex items-start justify-between">
-          {/* Left Side - Content */}
-          <div className="flex-1 mr-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Want to save time and increase your productivity?
-            </h3>
-          </div>
-
-          {/* Right Side - Image and Action Button */}
-          <div className="flex flex-col items-end space-y-4">
-            {/* Action Button */}
-            <button className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors cursor-pointer">
-              <svg
-                className="w-4 h-4 text-gray-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M7 17L17 7M17 7H7M17 7V17"
-                />
-              </svg>
-            </button>
-
-            {/* Image */}
-            <div className="w-48 h-32 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center">
-              <div className="text-4xl">💻</div>
-            </div>
-          </div>
+      {/* Content: illustration + text */}
+      <div className="p-5 flex flex-col sm:flex-row items-center gap-4">
+        <div className="w-full sm:w-36 h-28 sm:h-32 rounded-lg bg-gradient-to-br from-sky-100 via-amber-50 to-red-50 flex items-center justify-center shrink-0 overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=200&h=160&fit=crop"
+            alt=""
+            className="w-full h-full object-cover"
+          />
         </div>
+        <p className="text-gray-700 text-sm sm:text-base leading-relaxed flex-1">
+          Want to save time and increase your productivity?
+        </p>
       </div>
     </section>
   );

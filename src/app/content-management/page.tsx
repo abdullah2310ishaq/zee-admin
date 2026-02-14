@@ -40,11 +40,11 @@ export default function ContentManagementPage() {
           {/* Main Content */}
           <div className="flex-1 overflow-y-auto p-6 lg:p-8">
             <div className="space-y-8">
-              {/* Last Edited Section */}
-              <LastEditedSection />
-
-              {/* Scheduled Section */}
-              <ScheduledSection />
+              {/* Last Edited + Scheduled in one row */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <LastEditedSection />
+                <ScheduledSection />
+              </div>
 
               {/* My Posts Section */}
               <MyPostsSection />

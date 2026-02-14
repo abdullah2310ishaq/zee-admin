@@ -29,7 +29,7 @@ export function ContentManagementHeader({
         <div className="hidden md:block">
           <Input
             placeholder="Search for anything..."
-            className="w-64 h-12 px-4 bg-red-600 text-white placeholder:text-white/80 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-red-500 cursor-text"
+            className="w-64 h-12 px-4 bg-red-600 text-white placeholder:text-white/80 rounded-full border-0 focus:outline-none focus:ring-2 focus:ring-red-500 cursor-text"
           />
         </div>
 

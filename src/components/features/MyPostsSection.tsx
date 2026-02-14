@@ -12,7 +12,7 @@ interface PostItem {
   time: string;
   category: string;
   categoryColor: string;
-  image: string;
+  imageUrl: string;
 }
 
 export function MyPostsSection() {
@@ -29,7 +29,8 @@ export function MyPostsSection() {
       time: "10:15",
       category: "Knowledge",
       categoryColor: "bg-green-500",
-      image: "📱",
+      imageUrl:
+        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=320&fit=crop",
     },
     {
       id: "2",
@@ -41,7 +42,8 @@ export function MyPostsSection() {
       time: "14:30",
       category: "Tips",
       categoryColor: "bg-blue-500",
-      image: "💻",
+      imageUrl:
+        "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&h=320&fit=crop",
     },
     {
       id: "3",
@@ -53,7 +55,8 @@ export function MyPostsSection() {
       time: "12:30",
       category: "News",
       categoryColor: "bg-red-500",
-      image: "🚀",
+      imageUrl:
+        "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=600&h=320&fit=crop",
     },
   ];
 
@@ -62,12 +65,12 @@ export function MyPostsSection() {
       {/* Section Title */}
       <h2 className="text-2xl font-bold text-gray-900 mb-6">My Posts</h2>
 
-      {/* Posts Grid */}
+      {/* Posts Grid - larger cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {posts.map((post) => (
           <div
             key={post.id}
-            className="relative bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden group cursor-pointer"
+            className="relative bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden group cursor-pointer min-h-[380px] flex flex-col"
             onMouseEnter={() => setHoveredPost(post.id)}
             onMouseLeave={() => setHoveredPost(null)}
           >
@@ -83,95 +86,119 @@ export function MyPostsSection() {
               </span>
             </div>
 
-            {/* Hover Overlay */}
+            {/* Hover: blur overlay + red pill with icons */}
             {hoveredPost === post.id && (
-              <div className="absolute inset-0 bg-white/95 backdrop-blur-sm z-20 flex items-center justify-center">
-                <div className="flex space-x-4">
-                  {/* Edit */}
-                  <button className="w-12 h-12 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors cursor-pointer">
-                    <svg
-                      className="w-5 h-5 text-gray-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+              <>
+                <div
+                  className="absolute inset-0 z-20 backdrop-blur-md bg-white/30"
+                  aria-hidden
+                />
+                <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
+                  <div className="flex items-center gap-3 px-6 py-3 bg-red-500 rounded-full shadow-lg pointer-events-auto">
+                    <button
+                      type="button"
+                      className="p-2 text-white hover:bg-white/20 rounded-full transition-colors cursor-pointer"
+                      aria-label="Edit"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                      />
-                    </svg>
-                  </button>
-
-                  {/* Schedule/History */}
-                  <button className="w-12 h-12 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors cursor-pointer">
-                    <svg
-                      className="w-5 h-5 text-gray-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      className="p-2 text-white hover:bg-white/20 rounded-full transition-colors cursor-pointer"
+                      aria-label="Schedule"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </button>
-
-                  {/* Preview */}
-                  <button className="w-12 h-12 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors cursor-pointer">
-                    <svg
-                      className="w-5 h-5 text-gray-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      className="p-2 text-white hover:bg-white/20 rounded-full transition-colors cursor-pointer"
+                      aria-label="Send"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m-6-8h8a2 2 0 012 2v8a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2z"
-                      />
-                    </svg>
-                  </button>
-
-                  {/* Delete */}
-                  <button className="w-12 h-12 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors cursor-pointer">
-                    <svg
-                      className="w-5 h-5 text-gray-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      className="p-2 text-white hover:bg-white/20 rounded-full transition-colors cursor-pointer"
+                      aria-label="Delete"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                      />
-                    </svg>
-                  </button>
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </>
             )}
 
-            {/* Post Content */}
-            <div className="p-6">
+            {/* Post Content (blurs behind overlay on hover) */}
+            <div
+              className={cn(
+                "p-6 pt-5 flex flex-col flex-1 transition-[filter] duration-200",
+                hoveredPost === post.id && "blur-md"
+              )}
+            >
               {/* Title */}
-              <h3 className="text-sm font-medium text-gray-900 mb-4 line-clamp-3">
+              <h3 className="text-base font-medium text-gray-900 mb-4 line-clamp-3">
                 {post.title}
               </h3>
 
-              {/* Image */}
-              <div className="w-full h-32 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center mb-4">
-                <div className="text-3xl">{post.image}</div>
+              {/* Image from internet */}
+              <div className="w-full h-44 sm:h-52 rounded-lg overflow-hidden mb-5 flex-shrink-0 bg-gray-100">
+                <img
+                  src={post.imageUrl}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
               </div>
 
               {/* Footer */}
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mt-auto">
                 <div className="flex items-center space-x-2">
                   <svg
                     className="w-4 h-4 text-gray-500"
