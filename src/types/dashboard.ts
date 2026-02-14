@@ -6,8 +6,8 @@ export interface MetricCard {
     id: string;
     title: string;
     value: string;
-    change: string;
-    changeType: 'increase' | 'decrease';
+    change?: string;
+    changeType?: 'increase' | 'decrease';
     icon: string;
     iconColor: string;
 }
@@ -34,9 +34,18 @@ export interface UserProfile {
     avatar: string;
 }
 
+export interface PushNotificationState {
+    enabled: boolean;
+}
+
+export interface Contributor {
+    id: string;
+    name: string;
+    roleOrStat: string;
+    avatar: string;
+}
+
 export interface DashboardData {
     metrics: MetricCard[];
-    automations: AutomationItem[];
-    devices: DeviceItem[];
-    users: UserProfile[];
+    pushNotifications: PushNotificationState;
 }

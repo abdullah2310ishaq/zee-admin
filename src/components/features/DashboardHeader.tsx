@@ -61,7 +61,7 @@ export function DashboardHeader({
           <input
             type="text"
             placeholder="Search for anything..."
-            className="w-full h-12 px-4 bg-red-600 text-white placeholder:text-white/80 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-red-500 cursor-text"
+            className="w-full h-12 px-4 bg-red-600 text-white placeholder:text-white/80 rounded-full border-0 focus:outline-none focus:ring-2 focus:ring-red-500 cursor-text"
           />
         </div>
 

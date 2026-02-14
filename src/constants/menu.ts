@@ -53,7 +53,7 @@ export const MAIN_MENU_ITEMS: MenuItem[] = [
 
 export const HELP_CENTER = {
     title: 'Help Center',
-    description: 'Having Trouble in Learning Please contact us for more questions.',
+    description: 'Having Trouble in Learning. Please contact us for more questions.',
     buttonText: 'Go To Help Center',
     href: '/help-center',
 } as const;

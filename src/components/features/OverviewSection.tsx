@@ -27,7 +27,7 @@ export function OverviewSection({ metrics, className }: OverviewSectionProps) {
         <div className="relative" ref={dateRangeRef}>
           <button
             onClick={() => setIsDateRangeOpen(!isDateRangeOpen)}
-            className="flex items-center px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors w-full sm:w-auto cursor-pointer"
+            className="flex items-center px-4 py-2 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-colors w-full sm:w-auto cursor-pointer"
           >
             <span className="mr-2">Last 30 days</span>
             <svg
@@ -69,7 +69,7 @@ export function OverviewSection({ metrics, className }: OverviewSectionProps) {
       </div>
 
       {/* Metrics Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {metrics.map((metric) => (
           <MetricCard key={metric.id} metric={metric} />
         ))}

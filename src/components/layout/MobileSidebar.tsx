@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { SIDEBAR_GRADIENT } from "@/constants/colors";
 import { MAIN_MENU_ITEMS, HELP_CENTER } from "@/constants/menu";
@@ -82,24 +83,34 @@ export function MobileSidebar({
 
           {/* Logo Section */}
           <div className="flex flex-col items-center mb-12">
-            <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-3">
-              <span className="text-2xl font-bold text-gray-800">Z</span>
+            <div className="relative w-24 h-12 flex items-center justify-center">
+              <Image
+                src="/logo.png"
+                alt="ZeeBuddy"
+                width={96}
+                height={48}
+                className="object-contain object-center"
+                priority
+              />
             </div>
-            <span className="text-white text-lg font-medium">BUDDY</span>
           </div>
 
-          {/* Create New Project Button */}
+          {/* Create New Project - full-width pill, white bg, orange circle + text */}
           <Button
             variant="primary"
-            className="w-full mb-8 bg-white text-red-600 hover:bg-gray-100 font-medium cursor-pointer"
+            className="w-full mb-6 rounded-full py-4 px-4 min-h-[56px] bg-white hover:bg-gray-50 text-gray-900 font-medium flex items-center justify-start gap-3 cursor-pointer shrink-0"
+            aria-label="Create new project"
           >
-            <span className="mr-2">+</span>
-            Create new project
+            <span className="w-9 h-9 rounded-full bg-orange-500 flex items-center justify-center text-white text-xl font-medium shrink-0">
+              +
+            </span>
+            <span className="text-left">Create new project</span>
           </Button>
 
-          {/* Navigation Menu */}
-          <nav className="flex-1">
-            <ul className="space-y-2">
+          {/* Scrollable: Nav + Help Center (below Settings) */}
+          <div className="flex-1 min-h-0 overflow-y-auto flex flex-col">
+            <nav className="shrink-0">
+              <ul className="space-y-2">
               {MAIN_MENU_ITEMS.map((item) => {
                 const isActive = pathname === item.href;
                 return (
@@ -108,13 +119,13 @@ export function MobileSidebar({
                       href={item.href || "/"}
                       onClick={onClose}
                       className={cn(
-                        "w-full flex items-center px-4 py-3 rounded-lg text-left transition-colors cursor-pointer",
+                        "group w-full flex items-center gap-3 py-3 px-4 rounded-full text-left transition-colors cursor-pointer",
                         isActive
-                          ? "bg-white/20 text-red-100"
-                          : "text-white/70 hover:text-white hover:bg-white/10"
+                          ? "bg-white text-red-600"
+                          : "text-white/70 hover:bg-white hover:text-red-600"
                       )}
                     >
-                      <div className="mr-3 w-6 h-6 flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0">
                         {item.icon === "dashboard" && (
                           <svg
                             viewBox="0 0 24 24"
@@ -221,30 +232,29 @@ export function MobileSidebar({
                   </li>
                 );
               })}
-            </ul>
-          </nav>
+              </ul>
+            </nav>
 
-          {/* Help Center Section - Moved to very end */}
-          <div className="mt-8">
-            <div className="bg-red-600/20 rounded-lg p-4">
-              <div className="flex items-center mb-3">
-                <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center mr-3">
-                  <span className="text-white text-sm">?</span>
+            {/* Help Center - lower in sidebar, taller card */}
+            <div className="mt-12 pt-8 pb-8 shrink-0">
+              <Link
+                href={HELP_CENTER.href}
+                onClick={onClose}
+                className="relative block rounded-2xl bg-red-500 p-6 pt-10 pb-8 min-h-[200px] shadow-lg hover:bg-red-600 transition-colors cursor-pointer no-underline focus:outline-none focus:ring-0"
+              >
+                <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-red-500 border-4 border-white flex items-center justify-center shadow-[0_0_12px_rgba(255,255,255,0.4)]">
+                  <span className="text-white text-lg font-bold">?</span>
                 </div>
-                <h3 className="text-white font-semibold text-sm">
+                <h3 className="text-white font-bold text-center text-base mt-2">
                   {HELP_CENTER.title}
                 </h3>
-              </div>
-              <p className="text-gray-300 text-xs mb-4 leading-relaxed">
-                {HELP_CENTER.description}
-              </p>
-              <Button
-                variant="primary"
-                size="sm"
-                className="w-full bg-red-600 hover:bg-red-700 text-white cursor-pointer"
-              >
-                {HELP_CENTER.buttonText}
-              </Button>
+                <p className="text-white/95 text-sm text-center leading-relaxed mt-4 mb-6 line-clamp-4">
+                  {HELP_CENTER.description}
+                </p>
+                <span className="block w-full text-center py-3.5 rounded-full bg-white text-red-500 font-semibold text-sm">
+                  {HELP_CENTER.buttonText}
+                </span>
+              </Link>
             </div>
           </div>
         </div>

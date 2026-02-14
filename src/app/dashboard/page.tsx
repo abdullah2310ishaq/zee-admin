@@ -8,136 +8,52 @@ import { MobileSidebar } from "@/components/layout/MobileSidebar";
 import { DashboardHeader } from "@/components/features/DashboardHeader";
 import { OverviewSection } from "@/components/features/OverviewSection";
 import { AutomationList } from "@/components/features/AutomationList";
-import { DeviceList } from "@/components/features/DeviceList";
-import { UserList } from "@/components/features/UserList";
+import { TopContributorsSection } from "@/components/features/TopContributorsSection";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 // Mock data for dashboard
 const mockDashboardData = {
   metrics: [
     {
-      id: "revenue",
-      title: "Total revenue",
-      value: "$53,00989",
-      change: "+12%",
-      changeType: "increase" as const,
-      icon: "💰",
+      id: "news-posted",
+      title: "Total news posted",
+      value: "1,247",
+      icon: "📰",
+      iconColor: "text-blue-600",
+    },
+    {
+      id: "news-accepted",
+      title: "Total news accepted",
+      value: "892",
+      icon: "✅",
       iconColor: "text-green-600",
     },
     {
-      id: "projects",
-      title: "Projects",
-      value: "95 /100",
-      change: "-10%",
-      changeType: "decrease" as const,
-      icon: "📁",
+      id: "news-rejected",
+      title: "Total news rejected",
+      value: "355",
+      icon: "❌",
       iconColor: "text-red-600",
     },
-    {
-      id: "time",
-      title: "Time spent",
-      value: "1022 /1300 Hrs",
-      change: "+8%",
-      changeType: "increase" as const,
-      icon: "⏰",
-      iconColor: "text-blue-600",
-    },
-    {
-      id: "resources",
-      title: "Resources",
-      value: "101 /120",
-      change: "+2%",
-      changeType: "increase" as const,
-      icon: "👥",
-      iconColor: "text-purple-600",
-    },
   ],
-  automations: [
+  topContributors: [
     {
-      id: "linkedin",
-      title: "Linkedin Automations",
-      status: "running" as const,
-      icon: "💼",
-      iconColor: "text-blue-600",
+      id: "1",
+      name: "Sarah Chen",
+      roleOrStat: "124 articles",
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=128&h=128&fit=crop",
     },
     {
-      id: "email",
-      title: "Email Automations",
-      status: "running" as const,
-      icon: "📧",
-      iconColor: "text-green-600",
+      id: "2",
+      name: "James Wilson",
+      roleOrStat: "98 articles",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=128&h=128&fit=crop",
     },
     {
-      id: "scheduled1",
-      title: "Scheduled Sending",
-      status: "paused" as const,
-      icon: "📅",
-      iconColor: "text-gray-600",
-    },
-    {
-      id: "scheduled2",
-      title: "Scheduled Sending",
-      status: "paused" as const,
-      icon: "📅",
-      iconColor: "text-gray-600",
-    },
-  ],
-  devices: [
-    {
-      id: "iphone",
-      name: "Iphone 6s Plus",
-      status: "active" as const,
-      icon: "iphone" as const,
-    },
-    {
-      id: "macbook1",
-      name: "Macbook 2017",
-      status: "active" as const,
-      icon: "macbook" as const,
-    },
-    {
-      id: "macbook2",
-      name: "Macbook 2017",
-      status: "active" as const,
-      icon: "macbook" as const,
-    },
-    {
-      id: "macbook3",
-      name: "Macbook 2017",
-      status: "active" as const,
-      icon: "macbook" as const,
-    },
-  ],
-  users: [
-    {
-      id: "mike",
-      name: "Mike Taylor",
-      location: "Chicago, TX",
-      avatar: "https://ui-avatars.com/api/?name=Mike+Taylor&background=random",
-    },
-    {
-      id: "jack",
-      name: "Jack Green",
-      location: "Oakland, CO",
-      avatar: "https://ui-avatars.com/api/?name=Jack+Green&background=random",
-    },
-    {
-      id: "carmen",
-      name: "Carmen Lewis",
-      location: "Milwaukee, CA",
-      avatar: "https://ui-avatars.com/api/?name=Carmen+Lewis&background=random",
-    },
-    {
-      id: "micheal",
-      name: "Micheal Richardson",
-      location: "Tampa, CA",
-      avatar: "https://ui-avatars.com/api/?name=Micheal+Richardson&background=random",
-    },
-    {
-      id: "willie",
-      name: "Willie Cole",
-      location: "Seattle, MO",
-      avatar: "https://ui-avatars.com/api/?name=Willie+Cole&background=random",
+      id: "3",
+      name: "Priya Sharma",
+      roleOrStat: "87 articles",
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=128&h=128&fit=crop",
     },
   ],
 };
@@ -168,28 +84,16 @@ export default function DashboardPage() {
           {/* Header */}
           <DashboardHeader onMenuToggle={handleMenuToggle} />
 
-          {/* Main Content */}
-          <div className="flex-1 overflow-y-auto">
+          {/* Main Content - longer scrollable area */}
+          <div className="flex-1 overflow-y-auto min-h-0 pb-24">
             {/* Overview Section */}
             <OverviewSection metrics={mockDashboardData.metrics} />
 
-            {/* Bottom Sections */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
-              {/* Left Column - Automations */}
-              <div className="lg:col-span-1">
-                <AutomationList automations={mockDashboardData.automations} />
-              </div>
+            {/* Post notifications */}
+            <AutomationList />
 
-              {/* Middle Column - Devices */}
-              <div className="lg:col-span-1">
-                <DeviceList devices={mockDashboardData.devices} />
-              </div>
-
-              {/* Right Column - Users */}
-              <div className="lg:col-span-1">
-                <UserList users={mockDashboardData.users} />
-              </div>
-            </div>
+            {/* Top contributors - 3 in one row */}
+            <TopContributorsSection contributors={mockDashboardData.topContributors} />
           </div>
         </div>
       </MainContent>
